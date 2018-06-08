@@ -2,7 +2,7 @@
 
 package = "luma"
 
-version = "0.1-2"
+version = "0.2-1"
 
 description = {
   summary = "Lpeg-based macro system for Lua",
@@ -13,29 +13,29 @@ description = {
      templates.
   ]],
   license = "MIT/X11",
-  homepage = "http://luma.luaforge.net"
+  homepage = "http://www.lua.inf.puc-rio.br/~mascarenhas/luma"
 }
 
-dependencies = { "lpeg >= 0.7" }
+dependencies = { "lpeg >= 0.10", "cosmo" }
 
 -- LuaDist source
 source = {
-  tag = "0.1-2",
+  tag = "0.2-1",
   url = "git://github.com/LuaDist-testing/luma.git"
 }
 -- Original source
 -- source = {
---   url = "http://luaforge.net/frs/download.php/3017/luma-0.1.tar.gz"
+--   url = "http://cloud.github.com/downloads/mascarenhas/luma/luma-0.2.tar.gz"
 -- }
 
 build = {
-   type = "make",
-   build_pass = true,
-   install_target = "install-rocks",
-   install_variables = {
-     PREFIX  = "$(PREFIX)",
-     LUA_BIN = "/usr/bin/env lua",
-     LUA_DIR = "$(LUADIR)",
-     BIN_DIR = "$(BINDIR)"
-   }
+   type = "builtin",
+   modules = {
+     luma = "src/luma.lua",
+     ["luma.re"] = "src/re.lua"
+   },
+   install = {
+     bin = { "bin/luma", "bin/luma-expand" }
+   },
+   copy_directories = { "doc", "samples", "tests" }
 }
